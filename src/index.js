@@ -9,7 +9,7 @@ import "dotenv/config";
 import cors from 'cors';
 import express from "express";
 
-import {users, messages} from './users';
+import {users, messages} from './data';
 
 const app = express();
 app.use(cors());
@@ -40,7 +40,7 @@ app.get('/users', (req, res) => {
 });
 
 app.get('/users/:userId', (req, res) => {
-  return res.send(Object.values(users[req.params.userId]));
+  return res.send(users[req.params.userId]);
 })
 
 app.post('/users', (req, res) => {
@@ -56,6 +56,15 @@ app.delete('/users/:userId', (req, res) => {
   return res.send(
     `DELETE HTTP method on user/${req.params.userId} resource`);
 });
+
+//Manipulate messages resource
+app.get('/messages', (req, res) => {
+  return res.send(Object.values(messages));
+})
+
+app.get('/messages/:msgId', (req, res) => {
+  return res.send(messages[req.params.msgId]);
+})
 
 app.listen(process.env.PORT, () =>
   console.log("Example app using Express listening on port " + process.env.PORT)
